@@ -59,4 +59,4 @@ Meu objetivo é contribuir para a entrega de aplicações confiáveis, identific
 ## 📫 Contato
 
 - **GitHub:** [dylancezar](https://github.com/dylancezar)
-- **LinkedIn:** Adicionar link do perfil
+- **LinkedIn:** www.linkedin.com/in/dylan-cezar-1612b2337
