@@ -1,0 +1,281 @@
+{
+  "info": {
+    "_postman_id": "8f0a8f4c-f5a6-4db6-a1d7-612fc5219b66",
+    "name": "Postman extended [DYLAN CEZAR].",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57713111",
+    "_collection_link": "https://go.postman.co/collection/57713111-8f0a8f4c-f5a6-4db6-a1d7-612fc5219b66?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "REGISTRO",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"user\": {\r\n        \"username\": \"{{$randomFirstName}}{{$randomAlphaNumeric}}\",\r\n        \"email\": {{emailConduit}},\r\n        \"password\": \"{{passwordconduit}}\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}users",
+          "host": [
+            "{{BASE_URL}}users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "LOGIN",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});\r\n\r\nconst token = pm.response.json().user.token;\r\npm.test (\"Token is present\",)\r\n    pm.collectionVariables.set(\"tokenConduit\", token) ;"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"user\": {\r\n        \"username\": \"{{$randomFirstName}}{{$randomAlphaNumeric}}\",\r\n        \"email\": \"{{$randomEmail}}\",\r\n        \"password\": \"{{passwordconduit}}\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}users",
+          "host": [
+            "{{BASE_URL}}users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ARTIGOS",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});\r\nconst slug = pm.response.json().article.slug ;\r\npm.collectionVariables.set(\"slugConduit\", slug)"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenConduit}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"article\": {\r\n        \"title\": \"{{$randomJobTitle}}\",\r\n        \"description\": \"{{$randomAbbreviation}}\",\r\n        \"body\": \"{{$randomWord}}\",\r\n        \"tagList\": []\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}articles",
+          "host": [
+            "{{BASE_URL}}articles"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ADD COMENTÁRIO",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\npm.test(\"Content-Type is present\", function () {\r\n    pm.response.to.have.header(\"Content-Type\");\r\n});\r\nconst commentId = pm.response.json().comment.id;\r\npm.collectionVariables.set(\"commentId\", commentId)"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenConduit}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"comment\": {\r\n        \"body\": \"comentariodeteste\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BASE_URL}}articles/{{slugConduit}}/comments",
+          "host": [
+            "{{BASE_URL}}articles"
+          ],
+          "path": [
+            "{{slugConduit}}",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DEL COMENTÁRIO",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r\n    pm.response.to.have.status(204);\r\n});"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableCookies": false,
+        "followRedirects": true,
+        "maxResponseSize": 52428800,
+        "strictSSL": false
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenConduit}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}articles/{{slugConduit}}/comments/{{commentId}}",
+          "host": [
+            "{{BASE_URL}}articles"
+          ],
+          "path": [
+            "{{slugConduit}}",
+            "comments",
+            "{{commentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DEL ARTIGO",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r\n    pm.response.to.have.status(204);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenConduit}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}articles/{{slugConduit}}",
+          "host": [
+            "{{BASE_URL}}articles"
+          ],
+          "path": [
+            "{{slugConduit}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "passwordconduit",
+      "value": "#Batatinhafrita12345"
+    },
+    {
+      "key": "BASE_URL",
+      "value": "https://conduit.mate.academy/api/"
+    },
+    {
+      "key": "emailConduit",
+      "value": "\"{{$randomEmail}}\""
+    },
+    {
+      "key": "tokenConduit",
+      "value": "{{json_web_token}}"
+    },
+    {
+      "key": "slugConduit",
+      "value": "forward-operations-agent-8secfm"
+    },
+    {
+      "key": "commentId",
+      "value": 139822
+    }
+  ]
+}
